@@ -33,3 +33,6 @@ body {
     text-wrap: balance;
   }
 }
+.custom-scrollbar ::-webkit-scrollbar {
+  background-color: #ffffff3b;
+}
