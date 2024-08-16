@@ -1,6 +1,12 @@
 export const HOST = "http://localhost:4000";
 
 const authRoute = `${HOST}/api/auth`;
+const userRoute = `${HOST}/api/user`;
+const messageRoute = `${HOST}/api/message`;
 
 export const CHECK_USER_ROUTE = `${authRoute}/check-user`;
 export const ON_BOARD_USER = `${authRoute}/on-board`;
+export const GET_ALL_CONTACTS = `${userRoute}/getContacts`;
+
+export const SEND_MESSAGE = `${messageRoute}/add-message`;
+export const GET_MESSAGE = `${messageRoute}/getAllMessage`;

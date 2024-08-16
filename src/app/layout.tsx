@@ -33,7 +33,7 @@ export default async function RootLayout({
             <Loader />
           </ClerkLoading>
           <ClerkLoaded>
-            <Nav />
+            {/* <Nav /> */}
             <div>{children}</div>
             <div id="photo-picker-element"></div>
           </ClerkLoaded>

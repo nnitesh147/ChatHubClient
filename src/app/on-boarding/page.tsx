@@ -91,7 +91,6 @@ export default function Page() {
         if (!data.authentic) {
           router.push("/sign-in");
         }
-        console.log(data.status);
         if (data.status) {
           router.push("/");
         }
