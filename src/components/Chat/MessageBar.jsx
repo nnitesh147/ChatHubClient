@@ -5,16 +5,28 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { ImAttachment } from "react-icons/im";
 import { MdSend } from "react-icons/md";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SEND_MESSAGE } from "@/utils/ApiRoutes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import EmojiPicker from "emoji-picker-react";
 
 function MessageBar() {
   const router = useRouter();
-  const { currentChatUser } = useContext(StateContext);
+  const { currentChatUser, socket, setcurrentChatUserMessages } =
+    useContext(StateContext);
   const { userId, getToken } = useAuth();
   const [message, setmessage] = useState("");
+  const [showEmojiPicker, setshowEmojiPicker] = useState(false);
+  const emojiPickerRef = useRef(null);
+
+  const handleEmojiModal = () => {
+    setshowEmojiPicker(!showEmojiPicker);
+  };
+
+  const handleEmojiClick = (emoji) => {
+    setmessage((prev) => (prev += emoji.emoji));
+  };
 
   const sendMessage = async () => {
     if (message.length <= 0) {
@@ -22,7 +34,6 @@ function MessageBar() {
     }
     const sendMessage = async () => {
       const token = await getToken();
-      setmessage("");
       try {
         const { data } = await axios.post(
           SEND_MESSAGE,
@@ -38,6 +49,14 @@ function MessageBar() {
             },
           }
         );
+        socket.current.emit("send-msg", {
+          from: userId,
+          to: currentChatUser?.user_id,
+          message: data.data,
+        });
+        console.log(data?.data);
+        setcurrentChatUserMessages((prevData) => [...prevData, ...data.data]);
+        setmessage("");
         if (!data.authentic) {
           router.push("/sign-in");
         }
@@ -49,6 +68,23 @@ function MessageBar() {
     sendMessage();
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target.id !== "emoji-open") {
+        if (
+          emojiPickerRef.current &&
+          !emojiPickerRef.current.contains(e.target)
+        ) {
+          setshowEmojiPicker(false);
+        }
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  });
+
   return (
     <div className="bg-panel-header-background h-10 px-4 flex items-center gap-6 relative">
       <>
@@ -56,7 +92,17 @@ function MessageBar() {
           <BsEmojiSmile
             className="text-panel-header-icon cursor-pointer text-xl"
             title="Emoji"
+            id="emoji-open"
+            onClick={handleEmojiModal}
           />
+          {showEmojiPicker && (
+            <div
+              className="absolute bottom-24 left-16 z-40"
+              ref={emojiPickerRef}
+            >
+              <EmojiPicker onEmojiClick={handleEmojiClick} theme="dark" />
+            </div>
+          )}
           <ImAttachment
             className="text-panel-header-icon cursor-pointer text-xl"
             title="Attach file"

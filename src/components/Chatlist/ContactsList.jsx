@@ -81,7 +81,7 @@ function ContactsList() {
             <div className="text-teal-light pl-10 py-5 ">{initialLetter}</div>
             {userList.map((contact) => (
               <ChatLIstItem
-                isContactPage={true}
+                // isContactPage={true}
                 key={contact.user_id}
                 data={contact}
               />

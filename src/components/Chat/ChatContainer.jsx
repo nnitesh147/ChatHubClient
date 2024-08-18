@@ -1,5 +1,5 @@
 import { StateContext } from "@/app/page";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { calculateTime } from "../../utils/CalculateTime.js";
 import { useAuth } from "@clerk/nextjs";
 import MessageStatus from "../common/MessageStatus.jsx";
@@ -7,13 +7,24 @@ import { useRouter } from "next/navigation.js";
 
 function ChatContainer() {
   const { currentChatUserMessages, currentChatUser } = useContext(StateContext);
+  const containerRef = useRef();
 
   const { userId } = useAuth();
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (element) {
+      element.scrollTop = element.scrollHeight;
+    }
+  }, [currentChatUserMessages]);
 
   return (
     <div className="h-[80vh] relative w-full flex-grow">
       <div className="absolute inset-0 bg-chat-background bg-fixed opacity-25 z-10"></div>
-      <div className="relative h-full z-20 overflow-auto  p-2 no-scrollbar overflow-x-clip">
+      <div
+        className="relative h-full z-20 overflow-auto  p-2 no-scrollbar overflow-x-clip scroll"
+        ref={containerRef}
+      >
         <div className="flex flex-col my-4 w-full gap-1">
           {currentChatUserMessages?.map((message, index) => (
             <div

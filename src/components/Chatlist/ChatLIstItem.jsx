@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import Avatar from "../common/Avatar";
 import { StateContext } from "@/app/page";
 
-function ChatLIstItem({ data, isContactPage = false }) {
+function ChatLIstItem({ data }) {
+  // isContactPage upar dalna h
   const { setSet_Contact_page, setcurrentChatUser } = useContext(StateContext);
 
   const handleContactClick = () => {
