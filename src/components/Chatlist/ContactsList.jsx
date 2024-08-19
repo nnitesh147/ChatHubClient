@@ -18,6 +18,9 @@ function ContactsList() {
   const [allcontacts, setallcontacts] = useState([]);
   const { setSet_Contact_page } = useContext(StateContext);
 
+  const [searchTerm, setsearchTerm] = useState("");
+  const [searchedContacts, setsearchedContacts] = useState([]);
+
   useEffect(() => {
     const getContacts = async () => {
       const token = await getToken();
@@ -45,6 +48,14 @@ function ContactsList() {
     getContacts();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm) {
+      setsearchedContacts([]);
+    } else {
+      setsearchedContacts([]);
+    }
+  }, [searchTerm]);
+
   if (loading) {
     return <Loader />;
   }
@@ -61,34 +72,31 @@ function ContactsList() {
         </div>
       </div>
 
-      <div className="bg-search-input-container-background h-full flex-auto overflow-auto custom-scrollbar">
-        <div className="flex py-3 items-center gap-3 h-14">
-          <div className="bg-search-input-container-background flex items-center gap-5 px-3 py-1 rounded-lg flex-grow mx-4">
-            <div className="">
-              <BiSearchAlt2 className="text-panel-header-icon cursor-pointer text-lg" />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Search Contacts"
-                className="bg-transparent text-sm focus:outline-none text-white w-full"
-              />
-            </div>
-          </div>
+      <div className="bg-search-input-container-background h-full flex-auto overflow-auto no-scrollbar">
+        <div className="my-2">
+          <SearchBar value={searchTerm} onchange={setsearchTerm} />
         </div>
-        <SearchBar />
-        {Object.entries(allcontacts).map(([initialLetter, userList]) => (
-          <div key={Date.now() + initialLetter}>
-            <div className="text-teal-light pl-10 py-5 ">{initialLetter}</div>
-            {userList.map((contact) => (
-              <ChatLIstItem
-                // isContactPage={true}
-                key={contact.user_id}
-                data={contact}
-              />
-            ))}
-          </div>
-        ))}
+        {!searchTerm.length &&
+          Object.entries(allcontacts).map(([initialLetter, userList]) => (
+            <div key={Date.now() + initialLetter}>
+              <div className="text-teal-light pl-10 py-5 ">{initialLetter}</div>
+              {userList.map((contact) => (
+                <ChatLIstItem
+                  // isContactPage={true}
+                  key={contact.user_id}
+                  data={contact}
+                />
+              ))}
+            </div>
+          ))}
+        {/* {searchTerm.length &&
+          searchedContacts?.map((contact) => (
+            <ChatLIstItem
+              // isContactPage={true}
+              key={contact.user_id}
+              data={contact}
+            />
+          ))} */}
       </div>
       {/* <SearchBar BsFilter={"false"} /> */}
     </div>
