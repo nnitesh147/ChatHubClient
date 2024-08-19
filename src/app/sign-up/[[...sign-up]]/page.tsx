@@ -1,7 +1,6 @@
-import Logo from "../../../components/common/Logo";
+import { logo } from "@/context/constants";
 import { SignUp } from "@clerk/nextjs";
 import Image from "next/image";
-import { logo } from "@/context/constants";
 
 export default function Page() {
   return (

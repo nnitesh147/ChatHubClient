@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation.js";
 import Loader from "../Loader.jsx";
 import { BiArrowBack, BiSearchAlt2 } from "react-icons/bi";
 import { StateContext } from "@/app/page";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../common/SearchBar.jsx";
 import ChatList from "./ChatList.jsx";
 import ChatLIstItem from "./ChatLIstItem.jsx";
 
@@ -76,6 +76,7 @@ function ContactsList() {
             </div>
           </div>
         </div>
+        <SearchBar />
         {Object.entries(allcontacts).map(([initialLetter, userList]) => (
           <div key={Date.now() + initialLetter}>
             <div className="text-teal-light pl-10 py-5 ">{initialLetter}</div>

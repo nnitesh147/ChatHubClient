@@ -3,6 +3,8 @@ import { SignedIn } from "@clerk/nextjs";
 import { useAuth } from "@clerk/nextjs";
 import Empty from "../components/Empty.jsx";
 import Chat from "../components/Chat/Chat.jsx";
+import SearchMessages from "../components/Chat/SearchMessages.jsx";
+
 import { createContext, useEffect, useRef, useState } from "react";
 
 import ChatList from "../components/Chatlist/ChatList.jsx";
@@ -17,6 +19,8 @@ export default function Home() {
   const router = useRouter();
   const { userId, isLoaded, getToken } = useAuth();
   const [Set_Contact_page, setSet_Contact_page] = useState(false);
+  const [SET_MESSAGE_SEARCH, setSET_MESSAGE_SEARCH] = useState(false);
+
   const [socketEvent, setsocketEvent] = useState(false);
 
   const [currentChatUser, setcurrentChatUser] = useState(null);
@@ -89,6 +93,8 @@ export default function Home() {
           setcurrentChatUser,
           setcurrentChatUserMessages,
           socket,
+          setSET_MESSAGE_SEARCH,
+          SET_MESSAGE_SEARCH,
         }}
       >
         <div className="flex flex-row w-screen h-screen max-h-screen max-w-full overflow-hidden border-t-2 border-t-black">
@@ -96,7 +102,18 @@ export default function Home() {
             <ChatList />
           </div>
           <div className="w-[70%]">
-            {currentChatUser != null ? <Chat /> : <Empty />}
+            {currentChatUser != null ? (
+              <div
+                className={
+                  SET_MESSAGE_SEARCH ? "grid grid-cols-2" : "grid-cols-2"
+                }
+              >
+                <Chat />
+                {SET_MESSAGE_SEARCH && <SearchMessages />}
+              </div>
+            ) : (
+              <Empty />
+            )}
           </div>
         </div>
       </StateContext.Provider>

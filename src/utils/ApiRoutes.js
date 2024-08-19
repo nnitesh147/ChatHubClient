@@ -10,3 +10,7 @@ export const GET_ALL_CONTACTS = `${userRoute}/getContacts`;
 
 export const SEND_MESSAGE = `${messageRoute}/add-message`;
 export const GET_MESSAGE = `${messageRoute}/getAllMessage`;
+
+export const ADD_IMAGE_MESSAGE = `${messageRoute}/add-image-message`;
+
+export const ADD_AUDIO_MESSAGE = `${messageRoute}/add-audio-message`;

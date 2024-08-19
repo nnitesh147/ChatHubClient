@@ -1,13 +1,10 @@
+import Loader from "@/components/Loader.jsx";
+import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import Nav from "../components/common/Nav.jsx";
-import Loader from "@/components/Loader.jsx";
-import { StateProvider } from "../context/StateContext.jsx";
-import { initialState } from "../context/StateReducers.js";
-import reducer from "../context/StateReducers.js";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +30,7 @@ export default async function RootLayout({
             <Loader />
           </ClerkLoading>
           <ClerkLoaded>
-            {/* <Nav /> */}
+            <Nav />
             <div>{children}</div>
             <div id="photo-picker-element"></div>
           </ClerkLoaded>

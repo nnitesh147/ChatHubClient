@@ -1,9 +1,14 @@
 import { StateContext } from "@/app/page";
-import React, { useContext, useEffect, useRef } from "react";
-import { calculateTime } from "../../utils/CalculateTime.js";
 import { useAuth } from "@clerk/nextjs";
+import { useContext, useEffect, useRef } from "react";
+import { calculateTime } from "../../utils/CalculateTime.js";
+import ImageMessage from "../Chat/ImageMessage.jsx";
 import MessageStatus from "../common/MessageStatus.jsx";
-import { useRouter } from "next/navigation.js";
+
+import dynamic from "next/dynamic.js";
+const VoiceMessage = dynamic(() => import("../Chat/VoiceMessage.jsx"), {
+  ssr: false,
+});
 
 function ChatContainer() {
   const { currentChatUserMessages, currentChatUser } = useContext(StateContext);
@@ -59,6 +64,12 @@ function ChatContainer() {
                     </span>
                   </div>
                 </div>
+              )}
+              {message?.messageType === "image" && (
+                <ImageMessage message={message} />
+              )}
+              {message?.messageType === "audio" && (
+                <VoiceMessage message={message} />
               )}
             </div>
           ))}
