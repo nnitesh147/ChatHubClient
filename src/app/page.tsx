@@ -20,6 +20,8 @@ export default function Home() {
   const { userId, isLoaded, getToken } = useAuth();
   const [Set_Contact_page, setSet_Contact_page] = useState(false);
   const [SET_MESSAGE_SEARCH, setSET_MESSAGE_SEARCH] = useState(false);
+  const [SET_USER_CONRACTS, setSET_USER_CONRACTS] = useState([]);
+  const [onlineUsers, setonlineUsers] = useState([]);
 
   const [socketEvent, setsocketEvent] = useState(false);
 
@@ -91,7 +93,11 @@ export default function Home() {
           Set_Contact_page,
           currentChatUser,
           setcurrentChatUser,
+          SET_USER_CONRACTS,
+          setSET_USER_CONRACTS,
           setcurrentChatUserMessages,
+          onlineUsers,
+          setonlineUsers,
           socket,
           setSET_MESSAGE_SEARCH,
           SET_MESSAGE_SEARCH,

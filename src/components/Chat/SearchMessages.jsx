@@ -42,7 +42,11 @@ function SearchMessages() {
       <div className="overflow-auto no-scrollbar h-full">
         <div className="flex items-center flex-col w-full">
           <div className="flex px-5 items-center gap-3 h-14 w-full">
-            <SearchBar value={searchTerm} onchange={setsearchTerm} />
+            <SearchBar
+              value={searchTerm}
+              onchange={setsearchTerm}
+              placeholder={`Search Messages With ${currentChatUser?.name}`}
+            />
           </div>
           <span className="mt-10 text-secondary">
             {!searchTerm.length &&

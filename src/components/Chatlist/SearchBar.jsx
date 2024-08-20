@@ -2,7 +2,7 @@ import React from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BsFilter } from "react-icons/bs";
 
-const SearchBar = ({ BsFilter }) => {
+const SearchBar = () => {
   return (
     <div className="bg-search-input-container-background flex py-3 px-3 items-center gap-3 h-14">
       <div className="bg-panel-header-background flex items-center gap-5 px-3 py-1 rounded-lg flex-grow">
@@ -18,11 +18,9 @@ const SearchBar = ({ BsFilter }) => {
         </div>
       </div>
 
-      {BsFilter === "true" && (
-        <div className="pr-5 pl-3">
-          <BsFilter className="text-panel-header-icon cursor-pointer text-lg" />
-        </div>
-      )}
+      <div className="pr-5 pl-3">
+        <BsFilter className="text-panel-header-icon cursor-pointer text-lg" />
+      </div>
     </div>
   );
 };

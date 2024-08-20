@@ -19,7 +19,7 @@ function ContactsList() {
   const { setSet_Contact_page } = useContext(StateContext);
 
   const [searchTerm, setsearchTerm] = useState("");
-  const [searchedContacts, setsearchedContacts] = useState([]);
+  const [searchedContacts, setsearchedContacts] = useState({});
 
   useEffect(() => {
     const getContacts = async () => {
@@ -39,6 +39,7 @@ function ContactsList() {
           router.refresh("/");
         }
         setallcontacts(data.data);
+        setsearchedContacts(data.data);
         setloading(false);
       } catch (error) {
         console.log(error);
@@ -49,10 +50,18 @@ function ContactsList() {
   }, []);
 
   useEffect(() => {
-    if (searchTerm) {
-      setsearchedContacts([]);
-    } else {
-      setsearchedContacts([]);
+    if (!loading) {
+      if (searchTerm.length) {
+        const filterContacts = {};
+        Object.keys(allcontacts).forEach((key) => {
+          filterContacts[key] = allcontacts[key].filter((obj) => {
+            return obj.name.toLowerCase().includes(searchTerm.toLowerCase());
+          });
+        });
+        setsearchedContacts(filterContacts);
+      } else {
+        setsearchedContacts(allcontacts);
+      }
     }
   }, [searchTerm]);
 
@@ -74,29 +83,26 @@ function ContactsList() {
 
       <div className="bg-search-input-container-background h-full flex-auto overflow-auto no-scrollbar">
         <div className="my-2">
-          <SearchBar value={searchTerm} onchange={setsearchTerm} />
+          <SearchBar
+            value={searchTerm}
+            onchange={setsearchTerm}
+            placeholder={"Search All Contacts or Start a new Chat"}
+          />
         </div>
-        {!searchTerm.length &&
-          Object.entries(allcontacts).map(([initialLetter, userList]) => (
-            <div key={Date.now() + initialLetter}>
+        {Object.entries(searchedContacts).map(([initialLetter, userList]) => (
+          <div key={Date.now() + initialLetter}>
+            {!searchTerm.length && (
               <div className="text-teal-light pl-10 py-5 ">{initialLetter}</div>
-              {userList.map((contact) => (
-                <ChatLIstItem
-                  // isContactPage={true}
-                  key={contact.user_id}
-                  data={contact}
-                />
-              ))}
-            </div>
-          ))}
-        {/* {searchTerm.length &&
-          searchedContacts?.map((contact) => (
-            <ChatLIstItem
-              // isContactPage={true}
-              key={contact.user_id}
-              data={contact}
-            />
-          ))} */}
+            )}
+            {userList.map((contact) => (
+              <ChatLIstItem
+                isContactPage={true}
+                key={contact.user_id}
+                data={contact}
+              />
+            ))}
+          </div>
+        ))}
       </div>
       {/* <SearchBar BsFilter={"false"} /> */}
     </div>
