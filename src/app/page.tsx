@@ -4,6 +4,10 @@ import { useAuth } from "@clerk/nextjs";
 import Empty from "../components/Empty.jsx";
 import Chat from "../components/Chat/Chat.jsx";
 import SearchMessages from "../components/Chat/SearchMessages.jsx";
+import VideoCall from "../components/Call/VideoCall.jsx";
+import VoiceCall from "../components/Call/VoiceCall.jsx";
+import IncomingCall from "../components/common/IncomingCall.jsx";
+import IncomingVideoCall from "../components/common/IncomingVideoCall.jsx";
 
 import { createContext, useEffect, useRef, useState } from "react";
 
@@ -22,11 +26,16 @@ export default function Home() {
   const [SET_MESSAGE_SEARCH, setSET_MESSAGE_SEARCH] = useState(false);
   const [SET_USER_CONRACTS, setSET_USER_CONRACTS] = useState([]);
   const [onlineUsers, setonlineUsers] = useState([]);
-
   const [socketEvent, setsocketEvent] = useState(false);
-
   const [currentChatUser, setcurrentChatUser] = useState(null);
   const [currentChatUserMessages, setcurrentChatUserMessages] = useState([]);
+
+  const [SET_VIDEO_CALL, setSET_VIDEO_CALL] = useState(undefined);
+  const [SET_VOICE_CALL, setSET_VOICE_CALL] = useState(undefined);
+  const [SET_INCOMING_VIDEO_CALL, setSET_INCOMING_VIDEO_CALL] =
+    useState(undefined);
+  const [SET_INCOMING_VOICE_CALL, setSET_INCOMING_VOICE_CALL] =
+    useState(undefined);
 
   if (!isLoaded) return;
 
@@ -51,6 +60,35 @@ export default function Home() {
           ...data.message,
         ]);
       });
+
+      socket.current.on("incoming-voice-call", ({ from, roomId, callType }) => {
+        setSET_INCOMING_VOICE_CALL({
+          ...from,
+          roomId,
+          callType,
+        });
+      });
+      socket.current.on("incoming-video-call", ({ from, roomId, callType }) => {
+        setSET_INCOMING_VIDEO_CALL({
+          ...from,
+          roomId,
+          callType,
+        });
+      });
+
+      socket.current.on("voice-call-rejected", () => {
+        setSET_INCOMING_VIDEO_CALL(undefined);
+        setSET_INCOMING_VOICE_CALL(undefined);
+        setSET_VIDEO_CALL(undefined);
+        setSET_VOICE_CALL(undefined);
+      });
+      socket.current.on("video-call-rejected", () => {
+        setSET_INCOMING_VIDEO_CALL(undefined);
+        setSET_INCOMING_VOICE_CALL(undefined);
+        setSET_VIDEO_CALL(undefined);
+        setSET_VOICE_CALL(undefined);
+      });
+
       setsocketEvent(true);
     }
   }, [socket.current]);
@@ -88,6 +126,14 @@ export default function Home() {
     <SignedIn>
       <StateContext.Provider
         value={{
+          SET_VIDEO_CALL,
+          setSET_VIDEO_CALL,
+          SET_VOICE_CALL,
+          setSET_VOICE_CALL,
+          SET_INCOMING_VIDEO_CALL,
+          setSET_INCOMING_VIDEO_CALL,
+          SET_INCOMING_VOICE_CALL,
+          setSET_INCOMING_VOICE_CALL,
           setSet_Contact_page,
           currentChatUserMessages,
           Set_Contact_page,
@@ -103,25 +149,39 @@ export default function Home() {
           SET_MESSAGE_SEARCH,
         }}
       >
-        <div className="flex flex-row w-screen h-screen max-h-screen max-w-full overflow-hidden border-t-2 border-t-black">
-          <div className="w-[30%] border-r-black border-r-2 h-screen max-h-screen">
-            <ChatList />
+        {SET_INCOMING_VIDEO_CALL && <IncomingVideoCall />}
+        {SET_INCOMING_VOICE_CALL && <IncomingCall />}
+        {SET_VIDEO_CALL && (
+          <div className="h-screen w-screen max-h-full overflow-hidden">
+            <VideoCall />
           </div>
-          <div className="w-[70%]">
-            {currentChatUser != null ? (
-              <div
-                className={
-                  SET_MESSAGE_SEARCH ? "grid grid-cols-2" : "grid-cols-2"
-                }
-              >
-                <Chat />
-                {SET_MESSAGE_SEARCH && <SearchMessages />}
-              </div>
-            ) : (
-              <Empty />
-            )}
+        )}
+        {SET_VOICE_CALL && (
+          <div className="h-screen w-screen max-h-full overflow-hidden">
+            <VoiceCall />
           </div>
-        </div>
+        )}
+        {!SET_VIDEO_CALL && !SET_VOICE_CALL && (
+          <div className="flex flex-row w-screen h-screen max-h-screen max-w-full overflow-hidden border-t-2 border-t-black">
+            <div className="w-[30%] border-r-black border-r-2 h-screen max-h-screen">
+              <ChatList />
+            </div>
+            <div className="w-[70%]">
+              {currentChatUser != null ? (
+                <div
+                  className={
+                    SET_MESSAGE_SEARCH ? "grid grid-cols-2" : "grid-cols-2"
+                  }
+                >
+                  <Chat />
+                  {SET_MESSAGE_SEARCH && <SearchMessages />}
+                </div>
+              ) : (
+                <Empty />
+              )}
+            </div>
+          </div>
+        )}
       </StateContext.Provider>
     </SignedIn>
   );
