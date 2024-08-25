@@ -89,6 +89,10 @@ export default function Home() {
         setSET_VOICE_CALL(undefined);
       });
 
+      socket.current.on("online-users", ({ onlineUsers }) => {
+        setonlineUsers(onlineUsers);
+      });
+
       setsocketEvent(true);
     }
   }, [socket.current]);

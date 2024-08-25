@@ -48,8 +48,9 @@ export default function Page() {
 
         if (data.data[0]?.profileCompleted) {
           router.push("/");
+        } else {
+          setloading(false);
         }
-        setloading(false);
       } catch (error) {
         console.log(error);
       }
