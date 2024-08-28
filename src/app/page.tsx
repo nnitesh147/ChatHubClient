@@ -21,7 +21,8 @@ export const StateContext = createContext({});
 
 export default function Home() {
   const router = useRouter();
-  const { userId, isLoaded, getToken } = useAuth();
+  const socket = useRef<Socket>();
+  const { userId, getToken } = useAuth();
   const [Set_Contact_page, setSet_Contact_page] = useState(false);
   const [SET_MESSAGE_SEARCH, setSET_MESSAGE_SEARCH] = useState(false);
   const [SET_USER_CONRACTS, setSET_USER_CONRACTS] = useState([]);
@@ -36,14 +37,6 @@ export default function Home() {
     useState(undefined);
   const [SET_INCOMING_VOICE_CALL, setSET_INCOMING_VOICE_CALL] =
     useState(undefined);
-
-  if (!isLoaded) return;
-
-  if (!userId) {
-    router.push("/sign-in");
-  }
-
-  const socket = useRef<Socket>();
 
   useEffect(() => {
     if (userId) {
