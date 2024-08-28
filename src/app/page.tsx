@@ -47,7 +47,9 @@ export default function Home() {
 
   useEffect(() => {
     if (userId) {
-      socket.current = io(HOST);
+      socket.current = io(HOST, {
+        transports: ["polling"],
+      });
       socket.current?.emit("add-user", userId);
     }
   }, [userId]);

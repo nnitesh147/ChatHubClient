@@ -1,4 +1,4 @@
-export const HOST = "http://localhost:4000";
+export const HOST = "https://chathubserver-pydp.onrender.com";
 
 const authRoute = `${HOST}/api/auth`;
 const userRoute = `${HOST}/api/user`;
