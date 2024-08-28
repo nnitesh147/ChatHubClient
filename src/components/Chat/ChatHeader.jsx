@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { useContext, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";

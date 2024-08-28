@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { HOST } from "@/utils/ApiRoutes";
 import { calculateTime } from "@/utils/CalculateTime";
 import { useAuth } from "@clerk/nextjs";

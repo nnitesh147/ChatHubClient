@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { GET_INITIAL_CONTACTS } from "@/utils/ApiRoutes";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";

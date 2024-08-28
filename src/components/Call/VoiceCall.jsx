@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { useAuth, useUser } from "@clerk/nextjs";
 import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";

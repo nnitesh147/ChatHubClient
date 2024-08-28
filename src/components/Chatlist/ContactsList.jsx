@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation.js";
 import Loader from "../Loader.jsx";
 import { BiArrowBack, BiSearchAlt2 } from "react-icons/bi";
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import SearchBar from "../../common/SearchBar.jsx";
 import ChatList from "./ChatList.jsx";
 import ChatLIstItem from "./ChatLIstItem.jsx";

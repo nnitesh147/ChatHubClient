@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Avatar from "../common/Avatar";
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { useAuth } from "@clerk/nextjs";
 import { calculateTime } from "@/utils/CalculateTime";
 import MessageStatus from "../common/MessageStatus";

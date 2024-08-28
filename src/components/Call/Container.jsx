@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { MdOutlineCallEnd } from "react-icons/md";

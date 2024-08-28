@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { useAuth } from "@clerk/nextjs";
 import { useContext } from "react";
 import { BsEmojiSmile } from "react-icons/bs";

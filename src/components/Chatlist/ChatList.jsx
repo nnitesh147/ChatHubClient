@@ -1,6 +1,6 @@
 import ChatListHeader from "./ChatListHeader.jsx";
 import SearchBar from "./SearchBar.jsx";
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import React, { useContext, useEffect, useState } from "react";
 import List from "./List.jsx";
 import ContactsList from "../Chatlist/ContactsList.jsx";

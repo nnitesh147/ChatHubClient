@@ -1,4 +1,4 @@
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { calculateTime } from "@/utils/CalculateTime";
 import { useContext, useEffect, useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";

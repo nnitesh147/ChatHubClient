@@ -2,7 +2,7 @@ import Loader from "@/components/Loader.jsx";
 
 import { useContext, useEffect, useState } from "react";
 
-import { StateContext } from "@/app/page";
+import { StateContext } from "../Main.jsx";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation.js";
 
