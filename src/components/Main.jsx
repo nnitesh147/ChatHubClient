@@ -6,6 +6,7 @@ import SearchMessages from "../components/Chat/SearchMessages.jsx";
 import IncomingCall from "../components/common/IncomingCall.jsx";
 import IncomingVideoCall from "../components/common/IncomingVideoCall.jsx";
 import Empty from "../components/Empty.jsx";
+import GeminiChatComponent from "../components/common/GeminiChatComponent.jsx";
 
 import { useAuth } from "@clerk/nextjs";
 import { createContext, useEffect, useRef, useState } from "react";
@@ -29,6 +30,8 @@ function Main() {
   const [socketEvent, setsocketEvent] = useState(false);
   const [currentChatUser, setcurrentChatUser] = useState(null);
   const [currentChatUserMessages, setcurrentChatUserMessages] = useState([]);
+
+  const [geminiaidetails, setgeminiaidetails] = useState(false);
 
   const [SET_VIDEO_CALL, setSET_VIDEO_CALL] = useState(undefined);
   const [SET_VOICE_CALL, setSET_VOICE_CALL] = useState(undefined);
@@ -124,6 +127,8 @@ function Main() {
     <StateContext.Provider
       value={{
         SET_VIDEO_CALL,
+        geminiaidetails,
+        setgeminiaidetails,
         setSET_VIDEO_CALL,
         SET_VOICE_CALL,
         setSET_VOICE_CALL,
@@ -164,7 +169,7 @@ function Main() {
             <ChatList />
           </div>
           <div className="w-[70%]">
-            {currentChatUser != null ? (
+            {currentChatUser != null && (
               <div
                 className={
                   SET_MESSAGE_SEARCH ? "grid grid-cols-2" : "grid-cols-2"
@@ -173,9 +178,13 @@ function Main() {
                 <Chat />
                 {SET_MESSAGE_SEARCH && <SearchMessages />}
               </div>
-            ) : (
-              <Empty />
             )}
+            {geminiaidetails && (
+              <div>
+                <GeminiChatComponent />
+              </div>
+            )}
+            {currentChatUser === null && !geminiaidetails && <Empty />}
           </div>
         </div>
       )}

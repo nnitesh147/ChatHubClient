@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import Loader from "../Loader";
 import ChatLIstItem from "./ChatLIstItem";
+import GeminiAi from "../common/GeminiAi.jsx";
 
 import SearchBar from "../../common/SearchBar";
 
@@ -88,6 +89,7 @@ function List() {
           placeholder={"Search Contacts"}
         />
       </div>
+      <GeminiAi />
       {!searchTerm.length &&
         SET_USER_CONRACTS.map((user) => (
           <ChatLIstItem

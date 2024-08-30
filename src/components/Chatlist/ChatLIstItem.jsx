@@ -8,11 +8,13 @@ import { space } from "postcss/lib/list";
 import { FaCamera, FaMicrophone } from "react-icons/fa";
 
 function ChatLIstItem({ data, isContactPage }) {
-  const { setSet_Contact_page, setcurrentChatUser } = useContext(StateContext);
+  const { setSet_Contact_page, setcurrentChatUser, setgeminiaidetails } =
+    useContext(StateContext);
   const { userId } = useAuth();
 
   const handleContactClick = () => {
     setSet_Contact_page(false);
+    setgeminiaidetails(false);
     if (isContactPage) {
       setcurrentChatUser(data);
     } else {
