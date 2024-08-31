@@ -1,8 +1,21 @@
 import { StateContext } from "../Main.jsx";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 function IncomingCall() {
+  useEffect(() => {
+    let audioObj;
+    const play = async () => {
+      audioObj = new Audio("/call-sound.mp3");
+      audioObj.loop = true;
+      await audioObj.play();
+    };
+    play();
+    return () => {
+      audioObj.pause();
+      audioObj.currentTime = 0;
+    };
+  }, []);
   const {
     SET_INCOMING_VIDEO_CALL,
     setSET_INCOMING_VOICE_CALL,
