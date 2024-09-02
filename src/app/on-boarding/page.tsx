@@ -46,7 +46,7 @@ export default function Page() {
           router.push("/sign-in");
         }
 
-        if (data.data[0]?.profileCompleted) {
+        if (!data.onboard) {
           router.push("/");
         } else {
           setloading(false);
@@ -64,11 +64,10 @@ export default function Page() {
 
   const onChange = async () => {
     setloader(true);
-
-    const email = user?.primaryEmailAddress?.emailAddress;
-    if (!name || !email || name?.length < 3) {
+    if (!name || name?.length < 3) {
       return;
     }
+    const email = user?.emailAddresses[0].emailAddress.toString();
     const check = async () => {
       const token = await getToken();
       try {
