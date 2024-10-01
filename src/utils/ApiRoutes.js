@@ -1,4 +1,4 @@
-export const HOST = "https://western-devora-chathub-b55864c0.koyeb.app";
+export const HOST = "https://chathubserver-cgut.onrender.com";
 
 const authRoute = `${HOST}/api/auth`;
 const userRoute = `${HOST}/api/user`;
