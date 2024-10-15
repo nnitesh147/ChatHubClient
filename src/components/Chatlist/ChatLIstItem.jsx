@@ -18,6 +18,7 @@ function ChatLIstItem({ data, isContactPage }) {
     if (isContactPage) {
       setcurrentChatUser(data);
     } else {
+      data.totalUnreadMessages = 0;
       if (data.senderId === userId) {
         setcurrentChatUser(data.reciever);
       } else {
